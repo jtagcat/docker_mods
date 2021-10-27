@@ -1,0 +1,21 @@
+name: 'Pull upstream.conf from docker: httpd:alpine' # https://ghcr.io
+
+on: # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#on
+  push:
+    branches:
+      - main
+
+jobs:
+  fetch_upstream: # idiot proof* monitoring for upstream changes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: 'Fetch upstream.conf' # well this isn't what you really call upstream, it's midstream.. Not curl-ing either.
+        run: docker run --rm httpd:alpine cat /usr/local/apache2/conf/httpd.conf > httpd/upstream.conf # -2 points for not letting me use 'hub.docker.com/_/httpd:alpine'
+
+      - name: 'Commit: Configure user'
+        run: git config user.name github-actions && git config user.email github-actions@github.com
+
+      - name: 'Commit: Commit and Push'
+        run: "git commit -a -m 'upstream: update upstream.conf' && git push || true"
