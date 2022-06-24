@@ -1,8 +1,17 @@
 # docker_mods
 
-## `ghcr.io/jtagcat/docker_mods:openssl_ubuntu_latest`
+## ~~`ghcr.io/jtagcat/docker_mods:openssl_ubuntu_latest`~~
+Do not use this. You don't need an additional (security) dependency.
+
+Use `debian:stable-slim` with the following command in your Dockerfile:
+```
+RUN apt-get update && apt-get install -y \
+    openssl ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
+```
 
 ## httpd
+Again, try not to use this. I will try to phase this image out as well.
 
 A higher number includes changes in the lower number.
 
