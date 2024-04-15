@@ -19,17 +19,6 @@ jobs:
       - name: Authenticate with ghcr.io
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: 'generic: Build and Push Images'
-        run: |
-          repo=${{ github.repository }}
-          for dockerfile in Dockerfile.*; do
-            stag=$( sed 's/^Dockerfile\.//g' <<< $dockerfile )
-            tag="ghcr.io/$repo:$stag"
-            echo "Building $stag…"
-            docker build . -f "$dockerfile" --tag "$tag" --label "runnumber=${GITHUB_RUN_ID}"
-            docker push "$tag"
-          done # ah, sweet single-threaded; could bg builds, then wait and push, but gathering what to push to an array, and then somehow presenting _all_ of t
-
       - name: 'httpd: Build and Push Images'
         run: |
           repo='jtagcat/docker_httpd_mods'

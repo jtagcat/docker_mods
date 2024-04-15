@@ -1,9 +1,7 @@
 # docker_mods
 
 ## ~~`ghcr.io/jtagcat/docker_mods:openssl_ubuntu_latest`~~
-Do not use this. You don't need an additional (security) dependency.
-
-Use `debian:stable-slim` with the following command in your Dockerfile:
+Ths image has been deprecated on the basis of reducing depenidencies. Please move the contents directly to your Dockerfile:
 ```
 RUN apt-get update && apt-get install -y \
     openssl ca-certificates \
@@ -11,11 +9,9 @@ RUN apt-get update && apt-get install -y \
 ```
 
 ## httpd
-Again, try not to use this. I will try to phase this image out as well.
+Do not use this. The images will be deprecated without further notice.
 
 A higher number includes changes in the lower number.
-
-Defining the files in the repo is more clear. Generating and making images out of patchfiles gets messy. [xkcd:1205](https://xkcd.com/1205)
 
 ### `ghcr.io/jtagcat/docker_httpd_mods:01_utf8`
 
